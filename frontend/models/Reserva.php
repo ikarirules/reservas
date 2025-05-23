@@ -35,8 +35,9 @@ class Reserva extends \yii\db\ActiveRecord
         return [
             [['nombre', 'cantidad', 'fecha', 'telefono'], 'required'],
             [['cantidad'], 'integer'],
-            [['fecha', 'fecha_create', 'fecha_update'], 'safe'],
             [['nombre'], 'string', 'max' => 255],
+            [['fecha'], 'date', 'format' => 'php:Y-m-d'],
+            [['fecha_create', 'fecha_update'], 'safe'],
             [['telefono'], 'string', 'max' => 20],
         ];
     }

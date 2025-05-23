@@ -7,6 +7,9 @@ use frontend\models\ReservaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
+
 
 /**
  * ReservaController implements the CRUD actions for Reserva model.
@@ -16,16 +19,22 @@ class ReservaController extends Controller
     /**
      * @inheritDoc
      */
-    public function behaviors()
+     public function behaviors()
     {
         return array_merge(
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
+                ],
+                'timestamp' => [
+                    'class' => TimestampBehavior::class,
+                    'createdAtAttribute' => 'fecha_create',
+                    'updatedAtAttribute' => 'fecha_update',
+                    'value' => new Expression('NOW()'),
                 ],
             ]
         );

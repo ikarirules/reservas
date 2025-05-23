@@ -24,7 +24,11 @@ AppAsset::register($this);
 </head>
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
+<?php 
+$this->registerCssFile('https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css');
+$this->registerJsFile('https://cdn.jsdelivr.net/npm/flatpickr', ['depends' => \yii\web\JqueryAsset::class]);
 
+ ?>
 <header>
     <?php
     NavBar::begin([
