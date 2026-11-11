@@ -39,7 +39,9 @@ class UsuarioController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => User::find()
                 ->where(['not', ['rol' => null]])
-                ->andWhere(['<>', 'status', User::STATUS_DELETED]),
+                ->andWhere(['<>', 'status', User::STATUS_DELETED])
+                // Los usuarios protegidos no se listan.
+                ->andFilterWhere(['not in', 'id', Yii::$app->params['usuariosProtegidos'] ?? []]),
             'sort' => ['defaultOrder' => ['rol' => SORT_ASC, 'username' => SORT_ASC]],
         ]);
 

@@ -28,10 +28,7 @@ $this->title = 'Usuarios';
             [
                 'attribute' => 'username',
                 'label' => 'Usuario',
-                'format' => 'raw',
                 'contentOptions' => ['class' => 'principal'],
-                'value' => fn(User $u) => Html::encode($u->username)
-                    . ($u->esProtegido() ? ' ' . Html::tag('span', 'Protegido', ['class' => 'etiqueta', 'title' => 'Solo puede modificarlo el propio usuario']) : ''),
             ],
             [
                 'attribute' => 'email',
