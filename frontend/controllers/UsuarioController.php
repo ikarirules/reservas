@@ -60,7 +60,9 @@ class UsuarioController extends Controller
 
     public function actionUpdate($id)
     {
-        $model = new UsuarioForm($this->findModel($id));
+        $user = $this->findModel($id);
+        $this->exigirModificable($user);
+        $model = new UsuarioForm($user);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Usuario {$model->username} actualizado.");
@@ -76,6 +78,7 @@ class UsuarioController extends Controller
     public function actionDelete($id)
     {
         $user = $this->findModel($id);
+        $this->exigirModificable($user);
 
         if ((int)$user->id === (int)Yii::$app->user->id) {
             Yii::$app->session->setFlash('error', 'No podés eliminar tu propia cuenta.');
@@ -86,6 +89,16 @@ class UsuarioController extends Controller
         }
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Los usuarios protegidos solo pueden ser modificados por ellos mismos.
+     */
+    private function exigirModificable(User $user): void
+    {
+        if (!$user->puedeSerModificadoPorActual()) {
+            throw new \yii\web\ForbiddenHttpException('Este usuario está protegido y no puede modificarse.');
+        }
     }
 
     protected function findModel($id): User

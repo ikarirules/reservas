@@ -28,7 +28,10 @@ $this->title = 'Usuarios';
             [
                 'attribute' => 'username',
                 'label' => 'Usuario',
+                'format' => 'raw',
                 'contentOptions' => ['class' => 'principal'],
+                'value' => fn(User $u) => Html::encode($u->username)
+                    . ($u->esProtegido() ? ' ' . Html::tag('span', 'Protegido', ['class' => 'etiqueta', 'title' => 'Solo puede modificarlo el propio usuario']) : ''),
             ],
             [
                 'attribute' => 'email',
@@ -58,7 +61,9 @@ $this->title = 'Usuarios';
                 'template' => '{update} {delete}',
                 'contentOptions' => ['class' => 'acciones'],
                 'visibleButtons' => [
-                    'delete' => fn(User $u) => (int)$u->id !== (int)Yii::$app->user->id,
+                    'update' => fn(User $u) => $u->puedeSerModificadoPorActual(),
+                    'delete' => fn(User $u) => $u->puedeSerModificadoPorActual()
+                        && (int)$u->id !== (int)Yii::$app->user->id,
                 ],
             ],
         ],

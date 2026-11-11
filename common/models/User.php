@@ -74,6 +74,22 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->tieneRol(...array_keys(self::roles()));
     }
 
+    /**
+     * Usuario protegido: solo él mismo puede editarse (ver params 'usuariosProtegidos').
+     */
+    public function esProtegido(): bool
+    {
+        return in_array((int)$this->id, array_map('intval', Yii::$app->params['usuariosProtegidos'] ?? []), true);
+    }
+
+    /**
+     * Si el usuario logueado puede editar o eliminar a este usuario.
+     */
+    public function puedeSerModificadoPorActual(): bool
+    {
+        return !$this->esProtegido() || (int)$this->id === (int)Yii::$app->user->id;
+    }
+
     public function getRolNombre(): string
     {
         return self::roles()[$this->rol] ?? '(sin rol)';
