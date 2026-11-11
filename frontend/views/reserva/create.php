@@ -5,16 +5,16 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var frontend\models\Reserva $model */
 
-$this->title = Yii::t('app', 'Create Reserva');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Reservas'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Nueva reserva';
 ?>
 <div class="reserva-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <?= Html::a('← Reservas', ['index'], ['class' => 'volver']) ?>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <div class="encabezado">
+        <h1><?= Html::encode($this->title) ?></h1>
+    </div>
+
+    <?= $this->render('_form', ['model' => $model]) ?>
 
 </div>

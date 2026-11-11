@@ -11,6 +11,37 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'name' => 'Reservas',
+    'language' => 'es',
+    'container' => [
+        'definitions' => [
+            // Paginación con estilos de Bootstrap 5 en todas las grillas.
+            \yii\widgets\LinkPager::class => \yii\bootstrap5\LinkPager::class,
+        ],
+    ],
+    // Toda la app requiere estar logueado con una categoría de personal.
+    // Los invitados son redirigidos al login.
+    'as access' => [
+        'class' => \yii\filters\AccessControl::class,
+        'ruleConfig' => ['class' => \common\components\RolAccessRule::class],
+        'rules' => [
+            [
+                'controllers' => ['site'],
+                'actions' => ['login', 'error', 'request-password-reset', 'reset-password'],
+                'allow' => true,
+            ],
+            [
+                'controllers' => ['site'],
+                'actions' => ['logout'],
+                'allow' => true,
+                'roles' => ['@'],
+            ],
+            [
+                'allow' => true,
+                'roles' => array_keys(\common\models\User::roles()),
+            ],
+        ],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',

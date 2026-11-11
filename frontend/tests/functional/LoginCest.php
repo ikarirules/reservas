@@ -47,13 +47,13 @@ class LoginCest
     public function checkWrongPassword(FunctionalTester $I)
     {
         $I->submitForm('#login-form', $this->formParams('admin', 'wrong'));
-        $I->seeValidationError('Incorrect username or password.');
+        $I->seeValidationError('Usuario o contraseña incorrectos.');
     }
 
     public function checkInactiveAccount(FunctionalTester $I)
     {
         $I->submitForm('#login-form', $this->formParams('test.test', 'Test1234'));
-        $I->seeValidationError('Incorrect username or password');
+        $I->seeValidationError('Usuario o contraseña incorrectos');
     }
 
     public function checkValidLogin(FunctionalTester $I)

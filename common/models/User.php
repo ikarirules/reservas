@@ -17,6 +17,7 @@ use yii\web\IdentityInterface;
  * @property string $password_reset_token
  * @property string $verification_token
  * @property string $email
+ * @property string|null $rol administrador | recepcionista | mozo (null = sin acceso al panel)
  * @property string $auth_key
  * @property integer $status
  * @property integer $created_at
@@ -28,6 +29,55 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
+
+    const ROL_ADMIN = 'administrador';
+    const ROL_RECEPCIONISTA = 'recepcionista';
+    const ROL_MOZO = 'mozo';
+
+    /**
+     * Categorías de personal disponibles: valor => etiqueta.
+     */
+    public static function roles(): array
+    {
+        return [
+            self::ROL_ADMIN => 'Administrador',
+            self::ROL_RECEPCIONISTA => 'Recepcionista',
+            self::ROL_MOZO => 'Mozo',
+        ];
+    }
+
+    /**
+     * Estados de cuenta: valor => etiqueta.
+     */
+    public static function estados(): array
+    {
+        return [
+            self::STATUS_ACTIVE => 'Activo',
+            self::STATUS_INACTIVE => 'Inactivo',
+            self::STATUS_DELETED => 'Eliminado',
+        ];
+    }
+
+    /**
+     * Indica si el usuario tiene alguno de los roles indicados.
+     */
+    public function tieneRol(string ...$roles): bool
+    {
+        return $this->rol !== null && in_array($this->rol, $roles, true);
+    }
+
+    /**
+     * Personal del local (cualquier categoría).
+     */
+    public function esPersonal(): bool
+    {
+        return $this->tieneRol(...array_keys(self::roles()));
+    }
+
+    public function getRolNombre(): string
+    {
+        return self::roles()[$this->rol] ?? '(sin rol)';
+    }
 
 
     /**
@@ -56,6 +106,8 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            ['rol', 'default', 'value' => null],
+            ['rol', 'in', 'range' => array_keys(self::roles())],
         ];
     }
 

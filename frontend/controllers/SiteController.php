@@ -75,11 +75,22 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if (!Yii::$app->user->isGuest) {
+        // Los invitados nunca llegan acá: el control de acceso global los manda al login.
+        $user = Yii::$app->user->identity;
+
+        if ($user->tieneRol(\common\models\User::ROL_ADMIN, \common\models\User::ROL_RECEPCIONISTA)) {
             return $this->redirect(['reserva/index']);
         }
 
-        return $this->render('index');
+        // Mozo: sus grupos de hoy.
+        $grupos = \frontend\models\Reserva::find()
+            ->innerJoin('{{%reserva_mozo}} rm', 'rm.reserva_id = reserva.id')
+            ->where(['rm.mozo_id' => $user->id, 'reserva.fecha' => date('Y-m-d')])
+            ->with('mozos')
+            ->orderBy(new \yii\db\Expression('reserva.mesa IS NULL, reserva.mesa ASC'))
+            ->all();
+
+        return $this->render('index', ['grupos' => $grupos]);
     }
 
     /**

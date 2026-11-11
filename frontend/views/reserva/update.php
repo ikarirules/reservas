@@ -5,19 +5,16 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var frontend\models\Reserva $model */
 
-$this->title = Yii::t('app', 'Update Reserva: {name}', [
-    'name' => $model->id,
-]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Reservas'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->title = 'Editar reserva';
 ?>
 <div class="reserva-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <?= Html::a('← ' . Html::encode($model->nombre), ['view', 'id' => $model->id], ['class' => 'volver']) ?>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <div class="encabezado">
+        <h1><?= Html::encode($this->title) ?></h1>
+    </div>
+
+    <?= $this->render('_form', ['model' => $model]) ?>
 
 </div>
