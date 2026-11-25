@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Chuleta: hueso -->
+  <g stroke-linecap="round">
+    <line x1="30" y1="34" x2="51" y2="13" stroke="#94421f" stroke-width="11"/>
+    <line x1="30" y1="34" x2="51" y2="13" stroke="#fbf3e6" stroke-width="6"/>
+  </g>
+  <circle cx="48" cy="8.5" r="6" fill="#94421f"/>
+  <circle cx="55.5" cy="16" r="6" fill="#94421f"/>
+  <circle cx="48" cy="8.5" r="3.6" fill="#fbf3e6"/>
+  <circle cx="55.5" cy="16" r="3.6" fill="#fbf3e6"/>
+  <!-- Carne con borde de grasa -->
+  <path d="M30 18C42 16 48 28 44 40C40 52 26 60 14 54C4 49 4 34 12 26C18 20 24 19 30 18Z"
+        fill="#b5532c" stroke="#94421f" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M30 18C42 16 48 28 44 40C40 52 26 60 14 54C4 49 4 34 12 26C18 20 24 19 30 18Z"
+        fill="#b5532c" stroke="#f6e3d8" stroke-width="3.5" stroke-linejoin="round"/>
+  <!-- Corte del hueso -->
+  <circle cx="30" cy="33" r="4.5" fill="#fbf3e6" stroke="#94421f" stroke-width="1.5"/>
+</svg>

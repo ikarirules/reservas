@@ -22,6 +22,7 @@ $identity = Yii::$app->user->identity;
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#b5532c">
     <?php $this->registerCsrfMetaTags() ?>
+    <link rel="icon" type="image/svg+xml" href="<?= Yii::getAlias('@web') ?>/favicon.svg">
     <title><?= Html::encode($this->title ? $this->title . ' · ' . Yii::$app->name : Yii::$app->name) ?></title>
     <?php $this->head() ?>
 </head>
